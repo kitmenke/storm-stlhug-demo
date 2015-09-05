@@ -82,7 +82,7 @@ http://127.0.0.1:8983/solr/admin/collections?action=CREATE&name=word_count_colle
 
 Browse to Banana: http://127.0.0.1:8983/solr/banana/index.html#/dashboard
 
-Import the 
+Import *Word Dashboard.json* into Banana to create the dashboard.
 
 Other useful commands / notes
 ----------------------------

@@ -9,6 +9,11 @@ import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
+/**
+ * Bolt which logs each word and the current count. 
+ * @author Kit Menke
+ *
+ */
 public class OutputBolt extends BaseBasicBolt {
 	private static final long serialVersionUID = 1L;
 	private static Logger LOG = LoggerFactory.getLogger(OutputBolt.class);

@@ -13,6 +13,11 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
+/**
+ * Bolt which counts words.
+ * @author Kit Menke
+ *
+ */
 public class WordCountBolt extends BaseBasicBolt {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(WordCountBolt.class);

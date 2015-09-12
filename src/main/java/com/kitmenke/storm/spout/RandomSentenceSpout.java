@@ -14,12 +14,20 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 
+/**
+ * Spout which generates random sentences.
+ * @author Kit Menke
+ *
+ */
 public class RandomSentenceSpout extends BaseRichSpout {
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger LOG = LoggerFactory.getLogger(RandomSentenceSpout.class);
 
 	SpoutOutputCollector _collector;
 	Random _rand;
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void open(Map conf, TopologyContext context,
 			SpoutOutputCollector collector) {

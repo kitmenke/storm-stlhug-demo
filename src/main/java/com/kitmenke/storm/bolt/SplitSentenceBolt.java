@@ -10,6 +10,11 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
+/**
+ * Bolt which splits an incoming sentences into words using whitespace as a delimiter. 
+ * @author Kit Menke
+ *
+ */
 public class SplitSentenceBolt extends BaseBasicBolt {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = LoggerFactory.getLogger(SplitSentenceBolt.class);

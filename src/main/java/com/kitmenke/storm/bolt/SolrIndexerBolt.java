@@ -17,6 +17,11 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseRichBolt;
 import backtype.storm.tuple.Tuple;
 
+/**
+ * Bolt which indexes a word and the current count in Solr Cloud
+ * @author Kit Menke
+ *
+ */
 public class SolrIndexerBolt extends BaseRichBolt {
 	private static final long serialVersionUID = 1L;
 	private static Logger LOG = LoggerFactory.getLogger(SolrIndexerBolt.class);
@@ -51,7 +56,7 @@ public class SolrIndexerBolt extends BaseRichBolt {
 			doc.addField("word", word);
 			doc.addField("count", count);
 			doc.addField("updated", getDateNow());
-			_client.add(doc, 15000);
+			_client.add(doc, 5000);
 			
 			LOG.info("Indexed {} = {}", word, count);
 		} catch (Exception e) {

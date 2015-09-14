@@ -45,11 +45,18 @@ public class RandomSentenceSpout extends BaseRichSpout {
 				"I love lamp.", 
 				"They've done studies, you know. 60% of the time, it works every time.",
 				"You know I don’t speak Spanish.",
-				"And you ate the whole wheel of cheese?"};
+				"And you ate the whole wheel of cheese?", 
+				"Open the pod bay doors, HAL.",
+				"Space... The final frontier.",
+				"These are the voyages of the starship Enterprise.",
+				"It's continuing mission, to explore strange new worlds.",
+				"To seek out new life and new civilizations.",
+				"To boldly go where no one has gone before.",
+				"Tea, Earl Grey, hot."};
 		String sentence = sentences[_rand.nextInt(sentences.length)];
 		LOG.debug("RandomSentenceSpout generated this sentence: {}", sentence);
 		_collector.emit(new Values(sentence));
-		Utils.sleep(10000);
+		Utils.sleep(1000);
 	}
 	
 	@Override

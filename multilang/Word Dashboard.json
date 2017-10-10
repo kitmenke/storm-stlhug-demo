@@ -1,4 +1,4 @@
-{
+﻿{
   "title": "Word Dashboard",
   "services": {
     "query": {
@@ -29,12 +29,12 @@
       ],
       "list": {
         "0": {
-          "from": "NOW/MINUTE-15MINUTE",
+          "from": "NOW/MINUTE-5MINUTE",
           "to": "NOW/MINUTE%2B1MINUTE",
           "field": "updated",
           "type": "time",
-          "fromDateObj": "2015-09-05T22:57:06.389Z",
-          "toDateObj": "2015-09-05T23:12:06.390Z",
+          "fromDateObj": "2017-10-10T22:07:41.996Z",
+          "toDateObj": "2017-10-10T22:12:41.996Z",
           "mandate": "must",
           "active": true,
           "alias": "",
@@ -75,12 +75,12 @@
             "1y",
             "5y"
           ],
-          "timespan": "15m",
+          "timespan": "5m",
           "timefield": "updated",
           "timeformat": "",
           "refresh": {
             "enable": true,
-            "interval": 30,
+            "interval": 3,
             "min": 3
           },
           "filter_id": 0,
@@ -114,7 +114,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=updated:[NOW/MINUTE-15MINUTE%20TO%20NOW/MINUTE%2B1MINUTE]&wt=json&rows=0\n",
+            "query": "q=*%3A*&fq=updated:[NOW/MINUTE-5MINUTE%20TO%20NOW/MINUTE%2B1MINUTE]&stats=true&stats.field=count&wt=json&rows=0\n",
             "basic_query": "",
             "custom": ""
           },
@@ -129,7 +129,20 @@
           "labels": true,
           "spyable": true,
           "title": "Total Hits",
-          "show_queries": true
+          "show_queries": true,
+          "metrics": [
+            {
+              "type": "sum",
+              "field": "count",
+              "decimalDigits": 0,
+              "label": "Sum of counts",
+              "value": "372"
+            }
+          ],
+          "refresh": {
+            "enable": false,
+            "interval": 2
+          }
         }
       ]
     },
@@ -171,7 +184,7 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=0&fq=updated:[NOW/MINUTE-15MINUTE%20TO%20NOW/MINUTE%2B1MINUTE]&facet=true&facet.range=updated&facet.range.start=NOW/MINUTE-15MINUTE&facet.range.end=NOW/MINUTE%2B1MINUTE&facet.range.gap=%2B10SECOND\n",
+            "query": "q=*%3A*&wt=json&rows=0&fq=updated:[NOW/MINUTE-5MINUTE%20TO%20NOW/MINUTE%2B1MINUTE]&facet=true&facet.range=updated&facet.range.start=NOW/MINUTE-5MINUTE&facet.range.end=NOW/MINUTE%2B1MINUTE&facet.range.gap=%2B1SECOND\n",
             "custom": ""
           },
           "max_rows": 100000,
@@ -179,7 +192,7 @@
           "group_field": null,
           "auto_int": true,
           "resolution": 100,
-          "interval": "10s",
+          "interval": "1s",
           "intervals": [
             "auto",
             "1s",
@@ -216,7 +229,12 @@
           },
           "title": "Event Counts",
           "lines_smooth": false,
-          "show_queries": true
+          "show_queries": true,
+          "sum_value": false,
+          "refresh": {
+            "enable": false,
+            "interval": 2
+          }
         },
         {
           "span": 6,
@@ -228,11 +246,11 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&wt=json&rows=0&fq=updated:[NOW/MINUTE-15MINUTE%20TO%20NOW/MINUTE%2B1MINUTE]&stats=true&stats.facet=word&stats.field=count&facet.missing=true",
+            "query": "q=*%3A*&wt=json&fq=updated:[NOW/MINUTE-5MINUTE%20TO%20NOW/MINUTE%2B1MINUTE]&stats=true&stats.facet=id&stats.field=count&facet.missing=true&f.id.facet.sort=count",
             "custom": ""
           },
           "mode": "max",
-          "field": "word",
+          "field": "id",
           "stats_field": "count",
           "decimal_points": 0,
           "exclude": [],
@@ -311,7 +329,13 @@
             "#F9D9F9",
             "#DEDAF7"
           ],
-          "title": ""
+          "title": "",
+          "sortBy": "count",
+          "exportSize": 10000,
+          "refresh": {
+            "enable": false,
+            "interval": 2
+          }
         }
       ]
     },
@@ -333,27 +357,32 @@
             "ids": [
               0
             ],
-            "query": "q=*%3A*&fq=updated:[NOW/MINUTE-15MINUTE%20TO%20NOW/MINUTE%2B1MINUTE]&wt=json&rows=500",
-            "basic_query": "q=*%3A*&fq=updated:[NOW/MINUTE-15MINUTE%20TO%20NOW/MINUTE%2B1MINUTE]",
+            "query": "q=*%3A*&fq=updated:[NOW/MINUTE-5MINUTE%20TO%20NOW/MINUTE%2B1MINUTE]&wt=json&rows=500",
+            "basic_query": "q=*%3A*&fq=updated:[NOW/MINUTE-5MINUTE%20TO%20NOW/MINUTE%2B1MINUTE]",
             "custom": ""
           },
           "size": 100,
           "pages": 5,
           "offset": 0,
           "sort": [],
+          "sortable": false,
           "group": "default",
           "style": {
             "font-size": "9pt"
           },
           "overflow": "min-height",
           "fields": [
+            "id",
             "count",
-            "word",
-            "created",
+            "updated"
+          ],
+          "important_fields": [
+            "_version_",
+            "count",
+            "id",
             "updated"
           ],
           "highlight": [],
-          "sortable": false,
           "header": true,
           "paging": true,
           "field_list": false,
@@ -367,9 +396,13 @@
           "imageFields": [],
           "imgFieldWidth": "auto",
           "imgFieldHeight": "85px",
-          "title": "Table panel",
-          "important_fields": [],
-          "show_queries": true
+          "show_queries": true,
+          "maxNumCalcTopFields": 20,
+          "calcTopFieldValuesFromAllData": false,
+          "refresh": {
+            "enable": false,
+            "interval": 2
+          }
         }
       ]
     }
@@ -396,21 +429,18 @@
     "load_elasticsearch_size": 20,
     "load_local": true,
     "hide": false,
-    "dropdown_collections": false
+    "dropdown_collections": false,
+    "save_as_public": false
   },
   "solr": {
     "server": "/solr/",
     "core_name": "word_count_collection",
     "core_list": [
-      "banana-int_shard1_replica1",
-      "myCollection_shard1_replica1",
-      "word_count_collection_shard1_replica1",
-      "word_count_collection_shard1_replica2",
-      "word_count_collection_shard2_replica1",
-      "word_count_collection_shard2_replica2",
-      "word_count_collection_shard3_replica1",
-      "word_count_collection_shard3_replica2"
+      "banana-int",
+      "word_count_collection"
     ],
     "global_params": ""
-  }
+  },
+  "username": "guest",
+  "home": true
 }

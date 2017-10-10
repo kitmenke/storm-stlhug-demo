@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="word_count" version="1.6">
+	<uniqueKey>id</uniqueKey>
+  <fields>
+    <!-- _version_ is a required field -->
+    <field name="_version_" type="long" indexed="true" stored="false" />
+    <field name="id" type="string" indexed="true" stored="true" />
+    <field name="count" type="int" indexed="true" stored="true" />
+    <field name="updated" type="date" indexed="true" stored="true" />
+  </fields>
+  <types>
+    <fieldType name="string" class="solr.StrField" />
+    <fieldType name="int" class="solr.TrieIntField" docValues="true" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="long" class="solr.TrieLongField" docValues="true" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="date" class="solr.TrieDateField" docValues="true" precisionStep="0" positionIncrementGap="0"/>
+  </types>
+</schema>

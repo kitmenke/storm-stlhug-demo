@@ -9,13 +9,13 @@ import com.kitmenke.storm.bolt.SplitSentenceBolt;
 import com.kitmenke.storm.bolt.WordCountBolt;
 import com.kitmenke.storm.spout.RandomSentenceSpout;
 
-import backtype.storm.Config;
-import backtype.storm.LocalCluster;
-import backtype.storm.StormSubmitter;
-import backtype.storm.generated.AlreadyAliveException;
-import backtype.storm.generated.AuthorizationException;
-import backtype.storm.generated.InvalidTopologyException;
-import backtype.storm.topology.TopologyBuilder;
+import org.apache.storm.Config;
+import org.apache.storm.LocalCluster;
+import org.apache.storm.StormSubmitter;
+import org.apache.storm.generated.AlreadyAliveException;
+import org.apache.storm.generated.AuthorizationException;
+import org.apache.storm.generated.InvalidTopologyException;
+import org.apache.storm.topology.TopologyBuilder;
 
 /**
  * A Word Counting Storm topology.
@@ -46,15 +46,15 @@ public class WordCountTopology {
 		builder.setBolt(COUNT_BOLT, new WordCountBolt(), NUM_TASKS).shuffleGrouping(SPLIT_BOLT);
 		// log each word and the current count
 		builder.setBolt(LOG_BOLT, new OutputBolt(), NUM_TASKS).shuffleGrouping(COUNT_BOLT);
-		
+        // index each word and the current count in solr
+        builder.setBolt(SOLR_BOLT, new SolrIndexerBolt(), NUM_TASKS).shuffleGrouping(COUNT_BOLT);
+
 		Config conf = new Config();
 		
 		if (args != null && args.length > 0) {
-			// index each word and the current count in solr
-			builder.setBolt(SOLR_BOLT, new SolrIndexerBolt(), NUM_TASKS).shuffleGrouping(COUNT_BOLT);			
+
 			runClusterTopology(args, builder, conf);
 		} else {
-			
 			runLocalTopology(builder, conf);
 		}
 	}

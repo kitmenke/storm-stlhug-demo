@@ -7,15 +7,16 @@ import java.util.TimeZone;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.impl.CloudSolrClient;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backtype.storm.task.OutputCollector;
-import backtype.storm.task.TopologyContext;
-import backtype.storm.topology.OutputFieldsDeclarer;
-import backtype.storm.topology.base.BaseRichBolt;
-import backtype.storm.tuple.Tuple;
+import org.apache.storm.task.OutputCollector;
+import org.apache.storm.task.TopologyContext;
+import org.apache.storm.topology.OutputFieldsDeclarer;
+import org.apache.storm.topology.base.BaseRichBolt;
+import org.apache.storm.tuple.Tuple;
 
 /**
  * Bolt which indexes a word and the current count in Solr Cloud
@@ -27,19 +28,15 @@ public class SolrIndexerBolt extends BaseRichBolt {
 	private static Logger LOG = LoggerFactory.getLogger(SolrIndexerBolt.class);
 	OutputCollector _collector;
 	SolrClient _client;
-	
-	@SuppressWarnings("rawtypes")
+
 	@Override
 	public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
 		_collector = collector;
 		
 		try {
 			LOG.info("Initializing CloudSolrClient");
-			String zkHosts = "localhost:2181";
-			CloudSolrClient client = new CloudSolrClient(zkHosts);
-			client.setDefaultCollection("word_count_collection");
-			client.setIdField("word");
-			_client = client;
+            String urlString = "http://localhost:8983/solr/word_count_collection";
+            _client = new HttpSolrClient.Builder(urlString).build();
 		} catch (Exception e) {
 			LOG.error("SolrIndexerBolt prepare error", e);
 			_collector.reportError(e);
@@ -53,7 +50,7 @@ public class SolrIndexerBolt extends BaseRichBolt {
 			int count = input.getInteger(1);
 			
 			SolrInputDocument doc = new SolrInputDocument();
-			doc.addField("word", word);
+			doc.addField("id", word);
 			doc.addField("count", count);
 			doc.addField("updated", getDateNow());
 			_client.add(doc, 5000);

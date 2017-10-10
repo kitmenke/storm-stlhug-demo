@@ -13,10 +13,10 @@ import org.testng.annotations.Test;
 
 import com.kitmenke.storm.bolt.SplitSentenceBolt;
 
-import backtype.storm.topology.BasicOutputCollector;
-import backtype.storm.topology.OutputFieldsDeclarer;
-import backtype.storm.tuple.Fields;
-import backtype.storm.tuple.Tuple;
+import org.apache.storm.topology.BasicOutputCollector;
+import org.apache.storm.topology.OutputFieldsDeclarer;
+import org.apache.storm.tuple.Fields;
+import org.apache.storm.tuple.Tuple;
 
 public class SplitSentenceBoltTest {
 
